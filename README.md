@@ -1,52 +1,51 @@
-# React Native Real-Time Pose Skeleton 🏃‍♂️
+# React Native High-Performance Pose Engine (Skia) 🎨🚀
 
-A specialized React Native implementation focused on the high-performance rendering of human pose skeletons at the edge. This project demonstrates seamless mapping of 33-point BlazePose landmarks onto a responsive SVG overlay, maintained at a consistent 60 FPS.
+An elite-tier visualization layer for real-time biomechanical analysis. This project leverages **Shopify Skia** to render a 33-point human skeleton directly on the GPU, achieving maximum frame rates with near-zero CPU overhead.
 
 ---
 
-## 📱 Visual Demonstration
+## 📱 GPU-Accelerated Demo
 
 <p align="center">
-  <img src="./assets/demo.gif" width="300" alt="Skeleton Overlay Demo" />
+  <img src="./assets/demo.gif" width="300" alt="Skia Pose Skeleton Demo" />
 </p>
 
-_Above: Dynamic skeleton mapping showing real-time joint tracking and limb connectivity._
+_Above: Real-time skeletal rigging rendered via Skia's hardware-accelerated drawing API._
 
 ---
 
-## 🛠️ Engineering Focus: The Rendering Pipeline
+## 🛠️ Why Skia? (Technical Superiority)
 
-Most React Native vision apps struggle with "UI Lag" because the JS thread gets overwhelmed by coordinate data. This project showcases a solution focused on **UI Thread Efficiency**:
+Standard SVG rendering in React Native can bottleneck the UI thread when processing 30+ dynamic points at 60Hz. This implementation utilizes **React Native Skia** to solve the "Overhead" problem:
 
-- **Declarative Rendering:** Using `react-native-svg` to translate raw landmark coordinates into a connected skeletal graph.
-- **Coordinate Transformation:** A custom scaling engine that maps normalized MediaPipe coordinates (0.0 to 1.0) to absolute device pixels across different screen aspect ratios.
-- **Occlusion Handling:** Logic to manage landmark "visibility" scores, ensuring the skeleton only renders high-confidence points to prevent visual jitter.
+- **GPU Drawing:** Landmarks and "bones" are drawn as primitive paths directly on the GPU, bypassing the overhead of the React Native shadow tree.
+- **Imperative Power:** Utilizing Skia's `Canvas` and `Paint` objects for high-frequency updates, ensuring the skeleton never lags behind the camera feed.
+- **Memory Efficiency:** Optimized coordinate buffers to prevent garbage collection spikes during rapid movement.
 
 ---
 
-## 🧬 System Architecture
+## 🧬 Engineering Deep-Dive
 
-This MVP serves as the **Visualization Layer** for a larger Biometric AI system:
+To bridge the gap between AI inference and visual feedback, this PoC focuses on:
 
-1. **Input:** Real-time 60fps camera feed.
-2. **Processing:** On-device inference via MediaPipe (BlazePose).
-3. **Mapping:** Translating 33 keypoints into a hierarchical set of interconnected bones.
-4. **Output:** A smooth, low-latency SVG skeleton overlay.
+1. **Coordinate Mapping:** Translating normalized MediaPipe landmarks into Skia-space pixels.
+2. **Path Optimization:** Drawing the skeleton as a single, continuous path object where possible to minimize draw calls.
+3. **Visibility Filtering:** Dynamically adjusting the `opacity` of limbs based on the landmark confidence score provided by the vision engine.
 
 ---
 
 ## 🚀 Key Technical Features
 
-- [x] **Zero-Latency Overlay:** Decoupled rendering logic to prevent JS thread blocking.
-- [x] **33-Point Rigging:** Full body tracking from head to ankles.
-- [x] **Responsive Scaling:** Auto-adjusts skeleton to fit Portrait/Landscape and various screen densities.
-- [ ] **Roadmap:** Adding the Biometric Logic layer (Joint Angle calculation & Exercise classification).
+- [x] **Skia Canvas Integration:** Hardware-accelerated rendering at the mobile edge.
+- [x] **BlazePose Rigging:** Accurate mapping of major human keypoints.
+- [x] **Low-Latency Pipeline:** Designed for real-time fitness and physical therapy applications.
+- [ ] **Roadmap:** Adding Skia-based "Glow" effects and real-time angle overlays using `Skia.Text`.
 
 ---
 
-## 🧰 Stack
+## 🧰 Tech Stack
 
-- **Framework:** React Native (New Architecture / Fabric)
-- **Vision:** MediaPipe / Google BlazePose
-- **Rendering:** React Native SVG
+- **Framework:** React Native (New Architecture)
+- **Graphics Engine:** [Shopify Skia](https://shopify.github.io/react-native-skia/)
+- **Vision Engine:** MediaPipe / Google BlazePose
 - **Language:** TypeScript
