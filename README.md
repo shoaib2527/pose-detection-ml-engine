@@ -14,6 +14,26 @@ _Above: Real-time skeletal rigging rendered via Skia's hardware-accelerated draw
 
 ---
 
+graph LR
+    subgraph "Mobile Device (The Edge)"
+    A[Camera Feed] -->|RGBA Frames| B(MediaPipe / BlazePose)
+    B -->|Normalized Coordinates| C{Coordinate Engine}
+    
+    C -->|Coordinate Transformation| D[Skia Canvas]
+    C -->|Confidence Filtering| D
+    
+    subgraph "GPU Rendering"
+    D -->|Imperative Drawing| E[Skeletal Path]
+    E -->|Hardware Acceleration| F[User Display]
+    end
+    
+    C -.->|Future State: RAG| G((Cloud AI / Bedrock))
+    end
+    
+    style D fill:#f96,stroke:#333,stroke-width:2px
+    style F fill:#00d2ff,stroke:#000,stroke-width:2px
+    
+
 ## 🛠️ Why Skia? (Technical Superiority)
 
 Standard SVG rendering in React Native can bottleneck the UI thread when processing 30+ dynamic points at 60Hz. This implementation utilizes **React Native Skia** to solve the "Overhead" problem:
