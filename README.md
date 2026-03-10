@@ -1,50 +1,52 @@
-# Welcome to your Expo app 👋
+# React Native Real-Time Pose Skeleton 🏃‍♂️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A specialized React Native implementation focused on the high-performance rendering of human pose skeletons at the edge. This project demonstrates seamless mapping of 33-point BlazePose landmarks onto a responsive SVG overlay, maintained at a consistent 60 FPS.
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 Visual Demonstration
 
-   ```bash
-   npm install
-   ```
+<p align="center">
+  <img src="./assets/demo.gif" width="300" alt="Skeleton Overlay Demo" />
+</p>
 
-2. Start the app
+_Above: Dynamic skeleton mapping showing real-time joint tracking and limb connectivity._
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🛠️ Engineering Focus: The Rendering Pipeline
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Most React Native vision apps struggle with "UI Lag" because the JS thread gets overwhelmed by coordinate data. This project showcases a solution focused on **UI Thread Efficiency**:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Declarative Rendering:** Using `react-native-svg` to translate raw landmark coordinates into a connected skeletal graph.
+- **Coordinate Transformation:** A custom scaling engine that maps normalized MediaPipe coordinates (0.0 to 1.0) to absolute device pixels across different screen aspect ratios.
+- **Occlusion Handling:** Logic to manage landmark "visibility" scores, ensuring the skeleton only renders high-confidence points to prevent visual jitter.
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🧬 System Architecture
 
-```bash
-npm run reset-project
-```
+This MVP serves as the **Visualization Layer** for a larger Biometric AI system:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1. **Input:** Real-time 60fps camera feed.
+2. **Processing:** On-device inference via MediaPipe (BlazePose).
+3. **Mapping:** Translating 33 keypoints into a hierarchical set of interconnected bones.
+4. **Output:** A smooth, low-latency SVG skeleton overlay.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🚀 Key Technical Features
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [x] **Zero-Latency Overlay:** Decoupled rendering logic to prevent JS thread blocking.
+- [x] **33-Point Rigging:** Full body tracking from head to ankles.
+- [x] **Responsive Scaling:** Auto-adjusts skeleton to fit Portrait/Landscape and various screen densities.
+- [ ] **Roadmap:** Adding the Biometric Logic layer (Joint Angle calculation & Exercise classification).
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🧰 Stack
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Framework:** React Native (New Architecture / Fabric)
+- **Vision:** MediaPipe / Google BlazePose
+- **Rendering:** React Native SVG
+- **Language:** TypeScript
