@@ -13,26 +13,25 @@ An elite-tier visualization layer for real-time biomechanical analysis. This pro
 _Above: Real-time skeletal rigging rendered via Skia's hardware-accelerated drawing API._
 
 ---
+## 🏗️ System Architecture
 
-graph LR
-    subgraph "Mobile Device (The Edge)"
-    A[Camera Feed] -->|RGBA Frames| B(MediaPipe / BlazePose)
-    B -->|Normalized Coordinates| C{Coordinate Engine}
-    
-    C -->|Coordinate Transformation| D[Skia Canvas]
-    C -->|Confidence Filtering| D
-    
-    subgraph "GPU Rendering"
-    D -->|Imperative Drawing| E[Skeletal Path]
-    E -->|Hardware Acceleration| F[User Display]
-    end
-    
-    C -.->|Future State: RAG| G((Cloud AI / Bedrock))
-    end
-    
-    style D fill:#f96,stroke:#333,stroke-width:2px
-    style F fill:#00d2ff,stroke:#000,stroke-width:2px
-    
+```mermaid
+  graph LR
+      subgraph Mobile_Device [The Mobile Edge]
+      A[Camera Feed] --> B(MediaPipe Inference)
+      B -->|Normalized Coordinates| C{Coordinate Engine}
+      
+      subgraph GPU_Rendering [GPU Accelerated Layer]
+      C -->|Skia Canvas API| D[Hardware Drawing]
+      D --> E[Skeletal Rigging]
+      end
+      
+      C -.->|Future State| F((AWS Bedrock))
+      end
+  
+      style D fill:#f96,stroke:#333,stroke-width:2px
+      style E fill:#00d2ff,stroke:#000,stroke-width:2px
+```
 
 ## 🛠️ Why Skia? (Technical Superiority)
 
